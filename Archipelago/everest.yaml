@@ -1,0 +1,6 @@
+﻿- Name: Archipelago
+  Version: 0.1.1
+  DLL: Archipelago.dll
+  Dependencies:
+    - Name: Everest
+      Version: 1.3205.0
