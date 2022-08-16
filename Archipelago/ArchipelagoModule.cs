@@ -111,37 +111,47 @@ namespace Celeste.Mod.Archipelago
             Logger.Log("collectIndex", collectIndex.ToString());
 
             Session session = self.SceneAs<Level>().Session;
-            Logger.Log("Level", session.Area.GetSID());
-            Logger.Log("Chapter", session.Area.ChapterIndex.ToString());
+            AreaKey area = session.Area;
+            AreaMode side = area.Mode;
+
+            Logger.Log("Level", area.GetSID());
+            Logger.Log("Chapter", area.ChapterIndex.ToString());
+            Logger.Log("Side", side.ToString());
             Logger.Log("Count Safe", SaveData.Instance.TotalStrawberries_Safe.ToString());
             Logger.Log("Count", SaveData.Instance.TotalStrawberries.ToString());
 
-            var level = this.levelPack.Levels.FirstOrDefault(lvl => lvl.Id == session.Area.ChapterIndex);
+            var level = this.levelPack.Levels.FirstOrDefault(lvl => lvl.Id == area.ChapterIndex);
             if (level == null)
             {
-                Logger.Log("Level not mapped", session.Area.ChapterIndex.ToString());
+                Logger.Log("Level not mapped", area.ChapterIndex.ToString());
             }
             else
             {
-                var location =
-                    level.Strawberries.FirstOrDefault(berry => berry.Id == self.ID.ID && berry.Room == self.ID.Level);
+                Side sideData = level.Sides[side.ToString()];
 
-                if (location == null)
+                if (sideData == null)
                 {
-                    Logger.Log("AP Location Not Mapped", self.ID.ToString());
+                    Logger.Log("Side not mapped", side.ToString());
                 }
                 else
                 {
-                    Logger.Log("Location Complete", location.ToString());
+                    var location =
+                        sideData.Strawberries.FirstOrDefault(berry => berry.Id == self.ID.ID && berry.Room == self.ID.Level);
 
-                    this.currentAPSession.Locations.CompleteLocationChecks(location.ArchipelagoId);
+                    if (location == null)
+                    {
+                        Logger.Log("AP Location Not Mapped", self.ID.ToString());
+                    }
+                    else
+                    {
+                        Logger.Log("Location Complete", location.ToString());
+
+                        this.currentAPSession.Locations.CompleteLocationChecks(location.ArchipelagoId);
+                    }
                 }
             }
 
-            
-
             return orig(self, collectIndex);
-
         }
 
         public void onSessionStart(On.Celeste.Session.orig_ctor orig, Session self)

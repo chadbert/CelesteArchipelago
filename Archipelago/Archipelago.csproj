@@ -40,8 +40,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="FNA">
-      <HintPath>..\..\FNA\bin\Debug\FNA.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>lib\FNA.dll</HintPath>
     </Reference>
     <Reference Include="MMHOOK_Celeste">
       <HintPath>..\lib-stripped\MMHOOK_Celeste.dll</HintPath>
@@ -68,6 +67,7 @@
     <Compile Include="Models\Cassette.cs" />
     <Compile Include="Models\CrystalHeart.cs" />
     <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\Side.cs" />
     <Compile Include="Models\Level.cs" />
     <Compile Include="Models\LevelPack.cs" />
     <Compile Include="Models\Strawberry.cs" />
